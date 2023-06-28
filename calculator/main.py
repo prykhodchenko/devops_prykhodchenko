@@ -1,14 +1,14 @@
 from typing import List, Dict
 
-operations_list: List[str] = ['Addition', 'Subtraction', 'Multiplication', 'Division'];
+calculator_operations_list: List[str] = ['Addition', 'Subtraction', 'Multiplication', 'Division'];
 
 
 def run_calculator() -> None:
   numbers: Dict[str, float] = prompt_numbers_from_user()
   operation_index: int = prompt_operation_index_from_user()
-  result: float = calculate_result(numbers, operations_list[operation_index])
+  result: float = calculate_result(numbers, calculator_operations_list[operation_index])
 
-  print('The result of', operations_list[operation_index].lower(), 'is:', result)
+  print('The result of', calculator_operations_list[operation_index].lower(), 'is:', result)
 
 
 def prompt_numbers_from_user() -> Dict[str, float]:
@@ -30,19 +30,22 @@ def prompt_operation_index_from_user() -> int:
 
 
 def print_operations_list() -> None:
-  for index, operation in enumerate(operations_list, 1):
+  for index, operation in enumerate(calculator_operations_list, 1):
     print(index, operation, sep='. ')
 
 
-def calculate_result(numbers: Dict[str, float], operation: str) -> float:
-  if operation == operations_list[0]:
+def calculate_result(numbers: Dict[str, float], operation: str) -> float or str:
+  if operation == calculator_operations_list[0]:
     return numbers['first_number'] + numbers['second_number']
-  if operation == operations_list[1]:
+  if operation == calculator_operations_list[1]:
     return numbers['first_number'] - numbers['second_number']
-  if operation == operations_list[2]:
+  if operation == calculator_operations_list[2]:
     return numbers['first_number'] * numbers['second_number']
-  if operation == operations_list[3]:
-    return numbers['first_number'] / numbers['second_number']
+  if operation == calculator_operations_list[3]:
+    try:
+      return numbers['first_number'] / numbers['second_number']
+    except ZeroDivisionError:
+      return 'Cannot divide by zero'
 
 
 if __name__ == '__main__':
