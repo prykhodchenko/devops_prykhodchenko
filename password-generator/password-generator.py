@@ -13,18 +13,18 @@ digits: str = string.digits
 ascii_characters: str = string.punctuation
 all_characters: str = digits + lowercase_letters + ascii_characters + uppercase_letters
 
-def generate_password():
+def generate_password() -> None:
   print('Welcome to the Linux User Password Generator!')
 
-  password_length = ask_password_length()
-  required_characters = get_required_characters()
-  password_length_without_required_characters = password_length - len(required_characters)
-  random_chose_characters = random.choices(all_characters, weights = None, k = password_length_without_required_characters)
-  password_list = np.concatenate((random_chose_characters, required_characters))
+  password_length: int = ask_password_length()
+  required_characters: List[str] = get_required_characters()
+  password_length_without_required_characters: int = password_length - len(required_characters)
+  random_chose_characters: List[str] = random.choices(all_characters, weights = None, k = password_length_without_required_characters)
+  password_list: List[str] = np.concatenate((random_chose_characters, required_characters))
 
   random.shuffle(password_list)
 
-  password = list_to_string(password_list)
+  password: str = list_to_string(password_list)
 
   print('Generated password: ', password)
 
