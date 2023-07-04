@@ -30,19 +30,21 @@ def generate_password() -> None:
 
 
 #Ask use to type password length
-#Password length need be at least 8characters
+# need be at least 8characters
+
 def  ask_password_length() -> int:
-  password_length = int(input('Please enter the desired password length: '))
-
-  if password_length < 8 :
-    while password_length < 8 :
-      print('Your password length must be at least 8 characters!')
+  while True:
+    try:
       password_length = int(input('Please enter the desired password length: '))
-
-
-  return password_length
-
-
+    # Handle errors when int input is empty or not an int
+    except ValueError:
+      print('Please enter an integer')
+      continue
+    if password_length > 8:
+      return password_length
+    else:
+      # Handle errors when password_length less than 8
+      print('Your password length must be at least 8 characters!')
 
 #Ruturn random required characters
 def get_required_characters() -> List[str]:
@@ -60,7 +62,6 @@ def list_to_string(list) -> str:
     str += list_el
 
   return str
-
 
 if __name__ == '__main__':
   generate_password()
