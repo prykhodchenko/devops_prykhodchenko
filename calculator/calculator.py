@@ -4,6 +4,8 @@ calculator_operations_list: List[str] = ['Addition', 'Subtraction', 'Multiplicat
 
 
 def run_calculator() -> None:
+  print('Welcome to the Calculator Program!')
+
   numbers: Dict[str, float] = ask_numbers_from_user()
   operation_index: int = ask_operation_index_from_user()
   result: float = calculate_result(numbers, calculator_operations_list[operation_index])
