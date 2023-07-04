@@ -12,8 +12,8 @@ def run_calculator() -> None:
 
 #Ask user print values for calculation
 def ask_numbers_from_user() -> Dict[str, float]:
-  first_number: float = float(input('Please enter the first number:'))
-  second_number: float = float(input('Please enter the second number:'))
+  first_number: float = get_input_value('Please enter the first number:')
+  second_number: float = get_input_value('Please enter the second number:')
 
   return {'first_number': first_number, 'second_number': second_number}
 
@@ -21,6 +21,7 @@ def ask_numbers_from_user() -> Dict[str, float]:
 def ask_operation_index_from_user() -> int:
   print('Please select an operation:')
   print_operations_list()
+
   operation_index: int = 0
 
   while 1 > operation_index or operation_index > 4:
@@ -47,6 +48,17 @@ def calculate_result(numbers: Dict[str, float], operation: str) -> float or str:
       return numbers['first_number'] / numbers['second_number']
     except ZeroDivisionError:
       return 'Cannot divide by zero'
+def get_input_value (message: str):
+  while True:
+    try:
+      num = float(input(message))
+    except ValueError:
+      print('Please enter an integer or float')
+      continue
+    if isinstance(num, float):
+      return num
+
+
 
 
 if __name__ == '__main__':
