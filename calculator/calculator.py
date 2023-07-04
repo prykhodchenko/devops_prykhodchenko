@@ -50,15 +50,17 @@ def calculate_result(numbers: Dict[str, float], operation: str) -> float or str:
       return numbers['first_number'] / numbers['second_number']
     except ZeroDivisionError:
       return 'Cannot divide by zero'
-def get_input_value (message: str):
+
+# Function to handle errors when input is empty or not a number
+def get_input_value (message: str) -> float :
   while True:
     try:
-      num = float(input(message))
+      number = float(input(message))
     except ValueError:
       print('Please enter an integer or float')
       continue
-    if isinstance(num, float):
-      return num
+    if isinstance(number, float):
+      return number
 
 
 
