@@ -37,7 +37,7 @@ class PasswordGenerator:
         return self.__password
 
     @staticmethod
-    def list_to_string(lis_of_strings: List[str]) -> str:
+    def list_to_string(lis_of_strings: List) -> str:
         string_from_list: str = ''
 
         for list_el in lis_of_strings:
