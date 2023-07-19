@@ -30,20 +30,11 @@ class PasswordGenerator:
 
         random.shuffle(password_list)
 
-        self.__password = self.list_to_string(password_list)
+        self.__password = ''.join(str(x) for x in password_list)
 
     @property
     def password(self):
         return self.__password
-
-    @staticmethod
-    def list_to_string(lis_of_strings: List) -> str:
-        string_from_list: str = ''
-
-        for list_el in lis_of_strings:
-            string_from_list += list_el
-
-        return string_from_list
 
     @staticmethod
     def get_required_characters() -> List[str]:
