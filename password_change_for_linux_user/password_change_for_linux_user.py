@@ -30,6 +30,8 @@ def set_auto_generated_password(username: str) -> None:
     new_password: str = password_generator.password
     password_validator = PasswordValidator(new_password)
 
+    password_validator.validate_password()
+
     # check password requirements
     password_validation_results: PasswordValidationResult = password_validator.password_validation_result
 
@@ -43,6 +45,9 @@ def set_auto_generated_password(username: str) -> None:
 def set_typed_password(username: str, typed_password: str) -> None:
     # check password requirements
     password_validator = PasswordValidator(typed_password)
+
+    password_validator.validate_password()
+
     password_validation_results: PasswordValidationResult = password_validator.password_validation_result
     is_password_valid: bool = password_validator.is_password_valid
 

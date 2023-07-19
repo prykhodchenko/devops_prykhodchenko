@@ -15,22 +15,11 @@ class PasswordValidator:
         'digit': False
     }
     __is_password_valid: bool = False
+    __password: str = ''
 
     def __init__(self, password: str) -> None:
-        self.__password_validation_result['password_length'] = len(password) >= 8
+        self.__password = password
 
-        for i in password:
-            if i in string.punctuation:
-                self.__password_validation_result['punctuation'] = True
-            elif i.isupper():
-                self.__password_validation_result['upper_case_char'] = True
-            elif i.islower():
-                self.__password_validation_result['lower_case_char'] = True
-            elif i.isdigit():
-                self.__password_validation_result['digit'] = True
-
-        self.__is_password_valid = all(bool(password_validation_result) is True for password_validation_result in
-                                       self.__password_validation_result.values())
 
     @property
     def password_validation_result(self) -> PasswordValidationResult:
@@ -39,3 +28,22 @@ class PasswordValidator:
     @property
     def is_password_valid(self) -> bool:
         return self.__is_password_valid
+
+    @classmethod
+    def validate_password(cls) -> bool:
+        cls.__password_validation_result['password_length'] = len(cls.__password) >= 8
+
+        for i in cls.__password:
+            if i in string.punctuation:
+                cls.__password_validation_result['punctuation'] = True
+            elif i.isupper():
+                cls.__password_validation_result['upper_case_char'] = True
+            elif i.islower():
+                cls.__password_validation_result['lower_case_char'] = True
+            elif i.isdigit():
+                cls.__password_validation_result['digit'] = True
+
+        cls.__is_password_valid = all(bool(password_validation_result) is True for password_validation_result in
+                                       cls.__password_validation_result.values())
+
+        return cls.__is_password_valid
