@@ -14,7 +14,7 @@ class PasswordGenerator:
     __punctuation: bool = False
     __password: str or None = None
 
-    def __init__(self, password_length, uppercase_letters, lowercase_letters, digits, punctuation):
+    def __init__(self, password_length, uppercase_letters, lowercase_letters, digits, punctuation) -> None:
         self.__password_length: int = password_length
         self.__uppercase_letters: bool = uppercase_letters
         self.__lowercase_letters: bool = lowercase_letters
@@ -33,7 +33,7 @@ class PasswordGenerator:
         self.__password = ''.join(str(x) for x in password_list)
 
     @property
-    def password(self):
+    def password(self) -> str:
         return self.__password
 
     @staticmethod

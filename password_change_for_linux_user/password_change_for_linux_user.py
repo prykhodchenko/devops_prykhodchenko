@@ -4,6 +4,7 @@ import getpass
 from typing import Dict
 from colorama import Fore, Style
 
+from type_aliases import PasswordValidationResult
 from user_data_manipulator_on_linux import UserDataManipulatorOnLinux
 from password_generator import PasswordGenerator
 from password_validator import PasswordValidator
@@ -30,7 +31,7 @@ def set_auto_generated_password(username: str) -> None:
     password_validator = PasswordValidator(new_password)
 
     # check password requirements
-    password_validation_results: dict = password_validator.password_validation_result
+    password_validation_results: PasswordValidationResult = password_validator.password_validation_result
 
     # After we are rewriting the user password and print result
     UserDataManipulatorOnLinux.set_user_password(username, new_password)
@@ -42,7 +43,7 @@ def set_auto_generated_password(username: str) -> None:
 def set_typed_password(username: str, typed_password: str) -> None:
     # check password requirements
     password_validator = PasswordValidator(typed_password)
-    password_validation_results: dict = password_validator.password_validation_result
+    password_validation_results: PasswordValidationResult = password_validator.password_validation_result
     is_password_valid: bool = password_validator.is_password_valid
 
     if is_password_valid:
@@ -83,7 +84,7 @@ def ask_password_length() -> int:
     return password_length
 
 
-def print_result_of_set_user_password(username: str, password: str, password_validation_results: Dict) -> None:
+def print_result_of_set_user_password(username: str, password: str, password_validation_results: PasswordValidationResult) -> None:
     print(f'\nUsername: {username}'
           f'\nPassword: {password}')
 
@@ -91,7 +92,7 @@ def print_result_of_set_user_password(username: str, password: str, password_val
         print_password_validation_results(password_validation_results)
 
 
-def print_password_validation_results(password_validation_results: Dict) -> None:
+def print_password_validation_results(password_validation_results: PasswordValidationResult) -> None:
     for index, password_validation_result in enumerate(password_validation_results):
         print(f"\t{index + 1}. {password_validation_result.replace('_', ' ').title()}: "
               f'{Fore.GREEN if password_validation_results[password_validation_result] else Fore.RED}'

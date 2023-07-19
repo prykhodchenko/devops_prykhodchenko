@@ -3,9 +3,11 @@ import string
 
 from typing import Dict
 
+from type_aliases import PasswordValidationResult
+
 
 class PasswordValidator:
-    __password_validation_result: dict = {
+    __password_validation_result: PasswordValidationResult = {
         'password_length': False,
         'punctuation': False,
         'upper_case_char': False,
@@ -14,7 +16,7 @@ class PasswordValidator:
     }
     __is_password_valid: bool = False
 
-    def __init__(self, password):
+    def __init__(self, password: str) -> None:
         self.__password_validation_result['password_length'] = len(password) >= 8
 
         for i in password:
@@ -31,7 +33,7 @@ class PasswordValidator:
                                        self.__password_validation_result.values())
 
     @property
-    def password_validation_result(self) -> Dict:
+    def password_validation_result(self) -> PasswordValidationResult:
         return self.__password_validation_result
 
     @property
