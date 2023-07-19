@@ -4,7 +4,7 @@ import string
 from typing import Dict
 
 
-class PasswordValidator():
+class PasswordValidator:
     __password_validation_result: dict = {
         'password_length': False,
         'punctuation': False,

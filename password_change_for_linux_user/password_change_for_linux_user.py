@@ -99,6 +99,6 @@ def print_password_validation_results(password_validation_results: Dict) -> None
 
 
 if __name__ == '__main__':
-    username: str = ask_username()
+    linux_username: str = ask_username()
 
-    change_linux_user_password(username)
+    change_linux_user_password(linux_username)

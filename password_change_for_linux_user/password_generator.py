@@ -37,13 +37,13 @@ class PasswordGenerator:
         return self.__password
 
     @staticmethod
-    def list_to_string(list: List[str]) -> str:
-        string: str = ''
+    def list_to_string(lis_of_strings: List[str]) -> str:
+        string_from_list: str = ''
 
-        for list_el in list:
-            string += list_el
+        for list_el in lis_of_strings:
+            string_from_list += list_el
 
-        return string
+        return string_from_list
 
     @staticmethod
     def get_required_characters() -> List[str]:
