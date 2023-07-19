@@ -2,38 +2,38 @@
 import string
 
 from typing import Dict
-from two_dict_comparator import TwoDictComparator
 
-class PasswordValidator(TwoDictComparator):
-  __password_validation_result: dict = {
-    'password_length': False,
-    'punctuation': False,
-    'upper_case_char': False,
-    'lower_case_char': False,
-    'digit': False
-  }
-  __is_password_valid: bool = False
 
-  def __init__(self, password):
-    self.__password_validation_result['password_length'] = len(password) >= 8
+class PasswordValidator():
+    __password_validation_result: dict = {
+        'password_length': False,
+        'punctuation': False,
+        'upper_case_char': False,
+        'lower_case_char': False,
+        'digit': False
+    }
+    __is_password_valid: bool = False
 
-    for i in password:
-      if i in string.punctuation:
-        self.__password_validation_result['punctuation'] = True
-      elif i.isupper():
-        self.__password_validation_result['upper_case_char'] = True
-      elif i.islower():
-        self.__password_validation_result['lower_case_char'] = True
-      elif i.isdigit():
-        self.__password_validation_result['digit'] = True
+    def __init__(self, password):
+        self.__password_validation_result['password_length'] = len(password) >= 8
 
-    self.__is_password_valid = all(bool(password_validation_result) is True for password_validation_result in
-                                   self.__password_validation_result.values())
+        for i in password:
+            if i in string.punctuation:
+                self.__password_validation_result['punctuation'] = True
+            elif i.isupper():
+                self.__password_validation_result['upper_case_char'] = True
+            elif i.islower():
+                self.__password_validation_result['lower_case_char'] = True
+            elif i.isdigit():
+                self.__password_validation_result['digit'] = True
 
-  @property
-  def password_validation_result(self) -> Dict:
-    return self.__password_validation_result
+        self.__is_password_valid = all(bool(password_validation_result) is True for password_validation_result in
+                                       self.__password_validation_result.values())
 
-  @property
-  def is_password_valid(self) -> bool:
-    return self.__is_password_valid
+    @property
+    def password_validation_result(self) -> Dict:
+        return self.__password_validation_result
+
+    @property
+    def is_password_valid(self) -> bool:
+        return self.__is_password_valid
