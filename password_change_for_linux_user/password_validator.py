@@ -20,7 +20,6 @@ class PasswordValidator:
     def __init__(self, password: str) -> None:
         self.__password = password
 
-
     @property
     def password_validation_result(self) -> PasswordValidationResult:
         return self.__password_validation_result

@@ -24,15 +24,16 @@ def change_linux_user_password(username: str) -> None:
 def set_auto_generated_password(username: str) -> None:
     # ask the user to print the password length.
     password_length: int = ask_password_length()
-    password_generator = PasswordGenerator(password_length, True, True, True, True)
 
     # generate a strong password
-    new_password: str = password_generator.password
+    password_generator = PasswordGenerator(password_length, True, True, True, True)
+    new_password: str = password_generator.generate_password()
+
+    # validate the password
     password_validator = PasswordValidator(new_password)
 
     password_validator.validate_password()
 
-    # check password requirements
     password_validation_results: PasswordValidationResult = password_validator.password_validation_result
 
     # After we are rewriting the user password and print result

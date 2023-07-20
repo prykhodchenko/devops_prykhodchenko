@@ -21,17 +21,6 @@ class PasswordGenerator:
         self.__digits: bool = digits
         self.__punctuation: bool = punctuation
 
-        all_characters: str = string.digits + string.punctuation + string.ascii_lowercase + string.ascii_uppercase
-        required_characters: List[str] = PasswordGenerator.get_required_characters()
-        password_length_without_required_characters: int = self.__password_length - len(required_characters)
-        random_chose_characters: List[str] = random.choices(all_characters, weights=None,
-                                                            k=password_length_without_required_characters)
-        password_list: List = list(np.concatenate((random_chose_characters, required_characters)))
-
-        random.shuffle(password_list)
-
-        self.__password = ''.join(str(x) for x in password_list)
-
     @property
     def password(self) -> str:
         return self.__password
@@ -48,3 +37,18 @@ class PasswordGenerator:
             random.choices(string.punctuation, weights=None, k=1)[0],
             random.choices(string.digits, weights=None, k=1)[0],
         ]
+
+    @classmethod
+    def generate_password(cls):
+        all_characters: str = string.digits + string.punctuation + string.ascii_lowercase + string.ascii_uppercase
+        required_characters: List[str] = PasswordGenerator.get_required_characters()
+        password_length_without_required_characters: int = cls.__password_length - len(required_characters)
+        random_chose_characters: List[str] = random.choices(all_characters, weights=None,
+                                                            k=password_length_without_required_characters)
+        password_list: List = list(np.concatenate((random_chose_characters, required_characters)))
+
+        random.shuffle(password_list)
+
+        cls.__password = ''.join(str(x) for x in password_list)
+
+        return cls.__password
