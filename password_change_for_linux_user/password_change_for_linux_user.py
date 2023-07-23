@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
 import getpass
-from typing import Dict
 from colorama import Fore, Style
 
+from password_validator import PasswordValidator
 from type_aliases import PasswordValidationResult
 from user_data_manipulator_on_linux import UserDataManipulatorOnLinux
 from password_generator import PasswordGenerator
-from password_validator import PasswordValidator
+
 
 
 # The initial method of password change
@@ -26,14 +26,12 @@ def set_auto_generated_password(username: str) -> None:
     password_length: int = ask_password_length()
 
     # generate a strong password
-    password_generator = PasswordGenerator(password_length, True, True, True, True)
+    password_generator: PasswordGenerator = PasswordGenerator(password_length, True, True, True, True)
     new_password: str = password_generator.generate_password()
 
     # validate the password
-    password_validator = PasswordValidator(new_password)
-
-    password_validator.validate_password()
-
+    password_validator: PasswordValidator = PasswordValidator(True, True, True, True, True)
+    password_validator.validate_password(new_password)
     password_validation_results: PasswordValidationResult = password_validator.password_validation_result
 
     # After we are rewriting the user password and print result
@@ -45,9 +43,9 @@ def set_auto_generated_password(username: str) -> None:
 # Method change existing user password on typed password
 def set_typed_password(username: str, typed_password: str) -> None:
     # check password requirements
-    password_validator = PasswordValidator(typed_password)
+    password_validator: PasswordValidator = PasswordValidator(True, True, True, True, True)
 
-    password_validator.validate_password()
+    password_validator.validate_password(typed_password)
 
     password_validation_results: PasswordValidationResult = password_validator.password_validation_result
     is_password_valid: bool = password_validator.is_password_valid

@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
 import string
-
 from typing import Dict
 
 from type_aliases import PasswordValidationResult
 
 
 class PasswordValidator:
-    __password_validation_result: PasswordValidationResult = {
-        'password_length': False,
-        'punctuation': False,
-        'upper_case_char': False,
-        'lower_case_char': False,
-        'digit': False
-    }
+    __password_validation_requirements: Dict[str, bool] = {}
+    __password_validation_result: Dict[str, bool] = {}
     __is_password_valid: bool = False
-    __password: str = ''
 
-    def __init__(self, password: str) -> None:
-        self.__password = password
+    def __init__(self, check_password_length=True, check_digit=True, check_punctuation=True, check_upper_case_char=True,
+                 check_lower_case_char=True) -> None:
+        self.__password_validation_requirements.update({
+            'check_password_length': check_password_length,
+            'check_digit': check_digit,
+            'check_punctuation': check_punctuation,
+            'check_upper_case_char': check_upper_case_char,
+            'check_lower_case_char': check_lower_case_char
+        })
 
     @property
     def password_validation_result(self) -> PasswordValidationResult:
@@ -29,20 +29,21 @@ class PasswordValidator:
         return self.__is_password_valid
 
     @classmethod
-    def validate_password(cls) -> bool:
-        cls.__password_validation_result['password_length'] = len(cls.__password) >= 8
-
-        for i in cls.__password:
-            if i in string.punctuation:
-                cls.__password_validation_result['punctuation'] = True
-            elif i.isupper():
-                cls.__password_validation_result['upper_case_char'] = True
-            elif i.islower():
-                cls.__password_validation_result['lower_case_char'] = True
-            elif i.isdigit():
-                cls.__password_validation_result['digit'] = True
+    def validate_password(cls, password: str) -> bool:
+        if bool(cls.__password_validation_requirements.get('check_password_length')):
+            cls.__password_validation_result['password_length'] = len(password) >= 8
+        print()
+        for i in password:
+            if bool(cls.__password_validation_requirements.get('check_punctuation')):
+                cls.__password_validation_result['punctuation'] = i in string.punctuation
+            if bool(cls.__password_validation_requirements.get('check_upper_case_char')):
+                cls.__password_validation_result['upper_case_char'] = i.isupper()
+            if bool(cls.__password_validation_requirements.get('check_lower_case_char')):
+                cls.__password_validation_result['lower_case_char'] = i.islower()
+            if bool(cls.__password_validation_requirements.get('check_digit')):
+                cls.__password_validation_result['digit'] = i.isdigit()
 
         cls.__is_password_valid = all(bool(password_validation_result) is True for password_validation_result in
-                                       cls.__password_validation_result.values())
+                                      cls.__password_validation_result.values())
 
         return cls.__is_password_valid

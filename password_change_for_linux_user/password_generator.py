@@ -27,10 +27,6 @@ class PasswordGenerator:
 
     @staticmethod
     def get_required_characters() -> List[str]:
-        print(random.choices(string.ascii_uppercase, weights=None, k=1)[0],
-              random.choices(string.ascii_lowercase, weights=None, k=1)[0],
-              random.choices(string.punctuation, weights=None, k=1)[0],
-              random.choices(string.digits, weights=None, k=1)[0], )
         return [
             random.choices(string.ascii_uppercase, weights=None, k=1)[0],
             random.choices(string.ascii_lowercase, weights=None, k=1)[0],
@@ -39,7 +35,7 @@ class PasswordGenerator:
         ]
 
     @classmethod
-    def generate_password(cls):
+    def generate_password(cls) -> str:
         all_characters: str = string.digits + string.punctuation + string.ascii_lowercase + string.ascii_uppercase
         required_characters: List[str] = PasswordGenerator.get_required_characters()
         password_length_without_required_characters: int = cls.__password_length - len(required_characters)
