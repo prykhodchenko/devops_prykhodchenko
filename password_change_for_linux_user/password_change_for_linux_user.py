@@ -9,7 +9,6 @@ from user_data_manipulator_on_linux import UserDataManipulatorOnLinux
 from password_generator import PasswordGenerator
 
 
-
 # The initial method of password change
 def change_linux_user_password(username: str) -> None:
     typed_password: str = ask_user_to_type_password()
@@ -30,20 +29,18 @@ def set_auto_generated_password(username: str) -> None:
     new_password: str = password_generator.generate_password()
 
     # validate the password
-    password_validator: PasswordValidator = PasswordValidator(True, True, True, True, True)
+    password_validator: PasswordValidator = PasswordValidator()
     password_validator.validate_password(new_password)
-    password_validation_results: PasswordValidationResult = password_validator.password_validation_result
 
     # After we are rewriting the user password and print result
     UserDataManipulatorOnLinux.set_user_password(username, new_password)
-
-    print_result_of_set_user_password(username, new_password, password_validation_results)
+    print_result_of_set_user_password(username, new_password)
 
 
 # Method change existing user password on typed password
 def set_typed_password(username: str, typed_password: str) -> None:
     # check password requirements
-    password_validator: PasswordValidator = PasswordValidator(True, True, True, True, True)
+    password_validator: PasswordValidator = PasswordValidator()
 
     password_validator.validate_password(typed_password)
 
@@ -52,9 +49,9 @@ def set_typed_password(username: str, typed_password: str) -> None:
 
     if is_password_valid:
         UserDataManipulatorOnLinux.set_user_password(username, typed_password)
-        print_result_of_set_user_password(username, typed_password, password_validation_results)
+        print_result_of_set_user_password(username, typed_password)
     else:
-        print(Fore.RED + '\nYour password is not strong enough' + Style.RESET_ALL)
+        print(Fore.RED + 'Your password is not strong enough' + Style.RESET_ALL)
         print_password_validation_results(password_validation_results)
         change_linux_user_password(username)
 
@@ -82,18 +79,15 @@ def ask_password_length() -> int:
 
     if password_length < 8:
         while password_length < 8:
-            print('Your password length must be at least 8 characters!')
+            print(Fore.GREEN + 'Your password length must be at least 8 characters!' + Style.RESET_ALL)
             password_length = int(input('Please enter the desired password length: '))
 
     return password_length
 
 
-def print_result_of_set_user_password(username: str, password: str, password_validation_results: PasswordValidationResult) -> None:
-    print(f'\nUsername: {username}'
+def print_result_of_set_user_password(username: str, password: str) -> None:
+    print(f'Username: {username}'
           f'\nPassword: {password}')
-
-    if password_validation_results:
-        print_password_validation_results(password_validation_results)
 
 
 def print_password_validation_results(password_validation_results: PasswordValidationResult) -> None:

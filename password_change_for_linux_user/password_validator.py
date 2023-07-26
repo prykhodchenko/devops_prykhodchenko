@@ -6,7 +6,7 @@ from type_aliases import PasswordValidationResult
 
 
 class PasswordValidator:
-    __password_validation_requirements: Dict[str, bool] = {}
+    __password_validation_requirements: PasswordValidationResult = {}
     __password_validation_result: Dict[str, bool] = {}
     __is_password_valid: bool = False
 
@@ -31,19 +31,61 @@ class PasswordValidator:
     @classmethod
     def validate_password(cls, password: str) -> bool:
         if bool(cls.__password_validation_requirements.get('check_password_length')):
-            cls.__password_validation_result['password_length'] = len(password) >= 8
-        print()
-        for i in password:
-            if bool(cls.__password_validation_requirements.get('check_punctuation')):
-                cls.__password_validation_result['punctuation'] = i in string.punctuation
-            if bool(cls.__password_validation_requirements.get('check_upper_case_char')):
-                cls.__password_validation_result['upper_case_char'] = i.isupper()
-            if bool(cls.__password_validation_requirements.get('check_lower_case_char')):
-                cls.__password_validation_result['lower_case_char'] = i.islower()
-            if bool(cls.__password_validation_requirements.get('check_digit')):
-                cls.__password_validation_result['digit'] = i.isdigit()
+            cls.check_password_length(password)
+
+        if bool(cls.__password_validation_requirements.get('check_digit')):
+            cls.check_if_has_digit(password)
+
+        if bool(cls.__password_validation_requirements.get('check_punctuation')):
+            cls.check_if_has_punctuation(password)
+
+        if bool(cls.__password_validation_requirements.get('check_upper_case_char')):
+            cls.check_if_has_upper_case_char(password)
+
+        if bool(cls.__password_validation_requirements.get('check_lower_case_char')):
+            cls.check_if_has_lower_case_char(password)
 
         cls.__is_password_valid = all(bool(password_validation_result) is True for password_validation_result in
                                       cls.__password_validation_result.values())
 
         return cls.__is_password_valid
+
+    @classmethod
+    def check_password_length(cls, password: str) -> None:
+        cls.__password_validation_result['password_length'] = True if len(password) >= 8 else False
+
+    @classmethod
+    def check_if_has_digit(cls, password: str) -> None:
+        for character in password:
+            if character.isdigit():
+                cls.__password_validation_result['digit'] = True
+                break
+            else:
+                cls.__password_validation_result['digit'] = False
+
+    @classmethod
+    def check_if_has_punctuation(cls, password: str) -> None:
+        for character in password:
+            if character in string.punctuation:
+                cls.__password_validation_result['punctuation'] = True
+                break
+            else:
+                cls.__password_validation_result['punctuation'] = False
+
+    @classmethod
+    def check_if_has_upper_case_char(cls, password: str) -> None:
+        for character in password:
+            if character.isupper():
+                cls.__password_validation_result['upper_case_char'] = True
+                break
+            else:
+                cls.__password_validation_result['upper_case_char'] = False
+
+    @classmethod
+    def check_if_has_lower_case_char(cls, password: str) -> None:
+        for character in password:
+            if character.islower():
+                cls.__password_validation_result['lower_case_char'] = True
+                break
+            else:
+                cls.__password_validation_result['lower_case_char'] = False
