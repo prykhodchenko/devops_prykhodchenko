@@ -1,0 +1,5 @@
+pip~=23.1.2
+wheel~=0.38.4
+setuptools~=65.5.1
+colorama
+numpy
